@@ -23,3 +23,79 @@ npm run dev
 ```
 
 The app uses the Next.js App Router with basic pages for Home, Box Detail, and Reminders.
+
+## 🔗 API Contract Summary
+
+### User Registration
+- `POST /api/register`
+  - Request: `{ email: string }`
+  - Response: `{ userId: UUID }`
+
+### Box Management
+- `POST /api/box`
+  - Request: `{ userId: UUID, name: string }`
+  - Response: `{ boxId: UUID }`
+- `GET /api/box/:userId`
+  - Response: `[ { boxId: UUID, name: string } ]`
+
+### Item Management
+- `POST /api/item`
+  - Request:
+  ```ts
+  {
+    boxId: UUID;
+    name: string;
+    category: string;
+    imageUrl?: string;
+    barcode?: string;
+    purchaseDate?: string;
+    expiryDate?: string;
+    lastUsedDate?: string;
+  }
+  ```
+  - Response: `{ itemId: UUID }`
+- `GET /api/item/:boxId`
+  - Response: `[{ itemId, name, expiryDate, lastUsedDate }]`
+
+### Insights
+- `GET /api/insights/:userId`
+  - Response:
+  ```ts
+  {
+    topItems: [string];      // name + duration
+    unusedItems: [string];   // name + lastUsedDate
+  }
+  ```
+
+---
+
+## 🧾 TypeScript Types Used in Frontend (Can be shared)
+
+```ts
+type Box = {
+  id: string;
+  userId: string;
+  name: string;
+  createdAt: string;
+};
+
+type Item = {
+  id: string;
+  boxId: string;
+  name: string;
+  category: string;
+  imageUrl?: string;
+  barcode?: string;
+  purchaseDate?: string;
+  expiryDate?: string;
+  lastUsedDate?: string;
+  createdAt: string;
+};
+
+type Reminder = {
+  id: string;
+  itemId: string;
+  type: 'expiry' | 'reorg';
+  notifiedAt: string;
+};
+```
