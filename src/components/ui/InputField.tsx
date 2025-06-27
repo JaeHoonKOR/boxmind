@@ -17,7 +17,7 @@ export default function InputField({ label, type = 'text', register, name, requi
         {...register(name, { required })}
         type={type}
         aria-required={required}
-        className="w-full p-3 rounded-[14px] shadow-neu-inset placeholder-gray-400 focus:border focus:border-gray-400"
+        className="w-full p-3 rounded-[14px] shadow-neu-inset placeholder-gray-400 focus:border focus:border-gray-400 focus:outline-orange-500"
       />
     </label>
   );
