@@ -1,7 +1,12 @@
 'use client';
 import { Card } from './ui/Card';
+import { useEffect } from 'react';
 
 export default function Insights() {
+  useEffect(() => {
+    console.log('[Insights] Top 5 displayed');
+    console.log('[Insights] Cleanup suggested');
+  }, []);
   return (
     <section className="space-y-4" aria-labelledby="insights-title">
       <h2 id="insights-title" className="text-xl font-semibold">오래된 보관품 Top5</h2>
