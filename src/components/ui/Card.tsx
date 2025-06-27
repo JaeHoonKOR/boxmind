@@ -1,6 +1,7 @@
-import { HTMLAttributes } from 'react';
+// Simple container with neumorphic shadow
+import { HTMLAttributes, memo } from "react";
 
-export function Card({ className = '', ...props }: HTMLAttributes<HTMLDivElement>) {
+function Card({ className = "", ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={`rounded-[20px] p-4 bg-background shadow-neu ${className}`}
@@ -8,3 +9,6 @@ export function Card({ className = '', ...props }: HTMLAttributes<HTMLDivElement
     />
   );
 }
+
+export { Card };
+export default memo(Card);
