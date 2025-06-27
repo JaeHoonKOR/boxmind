@@ -4,72 +4,59 @@ This repository contains a minimal Next.js + TypeScript + Tailwind CSS frontend 
 
 ## 📦 BoxMind Frontend – Backend Integration Guide
 
-A Neumorphism-style Next.js + TypeScript frontend that manages physical storage spaces like refrigerators or vanities. This guide summarizes everything the backend engineer needs to know to build the API layer that connects with this frontend.
+This section summarizes how backend developers should interact with the Next.js frontend.
 
 ### 🧩 Folder Structure (Relevant to Backend)
 
-- `src/app` – Route definitions using the Next.js App Router. Pages such as `/box/[id]` and `/reminders` will request data from the backend.
-- `src/components` – UI components displaying boxes, items and reminders. They currently rely on placeholder arrays which should be replaced with API data.
-- `src/lib` – Small utilities like animation settings.
+- `src/app` – Next.js pages that request data from the backend (`/box/[id]`, `/reminders`, etc.).
+- `src/components` – UI and form components. `AddBox.tsx` and `AddItem.tsx` contain Zod schemas.
+- `src/lib` – Utility helpers such as animation settings.
 - `src/styles` – Global Tailwind CSS styles.
 
-## Development
+### 🔗 API Contract Summary
 
-Node modules are not included in this environment. After cloning, install dependencies and run the dev server:
-
-```bash
-npm install
-npm run dev
-```
-
-The app uses the Next.js App Router with basic pages for Home, Box Detail, and Reminders.
-
-## 🔗 API Contract Summary
-
-### User Registration
+#### User Registration
 - `POST /api/register`
   - Request: `{ email: string }`
   - Response: `{ userId: UUID }`
 
-### Box Management
+#### Box Management
 - `POST /api/box`
-  - Request: `{ userId: UUID, name: string }`
+  - Request: `{ userId: UUID; name: string }`
   - Response: `{ boxId: UUID }`
 - `GET /api/box/:userId`
-  - Response: `[ { boxId: UUID, name: string } ]`
+  - Response: `[ { boxId: UUID; name: string } ]`
 
-### Item Management
+#### Item Management
 - `POST /api/item`
   - Request:
-  ```ts
-  {
-    boxId: UUID;
-    name: string;
-    category: string;
-    imageUrl?: string;
-    barcode?: string;
-    purchaseDate?: string;
-    expiryDate?: string;
-    lastUsedDate?: string;
-  }
-  ```
+    ```ts
+    {
+      boxId: UUID;
+      name: string;
+      category: string;
+      imageUrl?: string;
+      barcode?: string;
+      purchaseDate?: string;
+      expiryDate?: string;
+      lastUsedDate?: string;
+    }
+    ```
   - Response: `{ itemId: UUID }`
 - `GET /api/item/:boxId`
   - Response: `[{ itemId, name, expiryDate, lastUsedDate }]`
 
-### Insights
+#### Insights
 - `GET /api/insights/:userId`
   - Response:
-  ```ts
-  {
-    topItems: [string];      // name + duration
-    unusedItems: [string];   // name + lastUsedDate
-  }
-  ```
+    ```ts
+    {
+      topItems: string[];      // name + duration
+      unusedItems: string[];   // name + lastUsedDate
+    }
+    ```
 
----
-
-## 🧾 TypeScript Types Used in Frontend (Can be shared)
+### 🧾 Shared TypeScript Types
 
 ```ts
 type Box = {
@@ -99,3 +86,39 @@ type Reminder = {
   notifiedAt: string;
 };
 ```
+
+### ✔️ Zod Validation Schemas
+
+```ts
+// src/components/AddBox.tsx
+const schema = z.object({
+  name: z.string().min(1)
+});
+
+// src/components/AddItem.tsx
+const schema = z.object({
+  name: z.string().min(1),
+  category: z.string().min(1),
+  barcode: z.string().optional(),
+  photo: z.any().optional()
+});
+```
+
+### 🗒️ Notes for Backend Developers
+
+- Primary keys are UUID strings.
+- Dates are formatted as `YYYY-MM-DD`.
+- Free tier allows up to **2 boxes** and **50 items**.
+- APIs should power insight generation and reminder notifications.
+- Future plan: AI-based image recognition for uploaded item photos.
+
+## Development
+
+Node modules are not included in this environment. After cloning, install dependencies and run the dev server:
+
+```bash
+npm install
+npm run dev
+```
+
+The app uses the Next.js App Router with basic pages for Home, Box Detail, and Reminders.
