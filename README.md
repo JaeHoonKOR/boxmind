@@ -7,7 +7,6 @@ This repository contains a minimal Next.js + TypeScript + Tailwind CSS frontend 
 Node modules are not included in this environment. After cloning, install dependencies and run the dev server:
 
 ```bash
-cd frontend
 npm install
 npm run dev
 ```
