@@ -1,7 +1,8 @@
-import { HTMLAttributes } from 'react';
+// Reusable SVG icon component
+import { HTMLAttributes, memo } from "react";
 
 interface Props extends HTMLAttributes<SVGElement> {
-  name: 'fridge' | 'close';
+  name: "fridge" | "close";
 }
 
 const icons = {
@@ -10,18 +11,15 @@ const icons = {
   ),
   close: (
     <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l6 6m0-6L6 12" />
-  )
+  ),
 };
 
-export default function SvgIcon({ name, ...props }: Props) {
+function SvgIcon({ name, ...props }: Props) {
   return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      {...props}
-    >
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" {...props}>
       {icons[name]}
     </svg>
   );
 }
+
+export default memo(SvgIcon);

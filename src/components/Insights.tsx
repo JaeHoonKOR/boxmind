@@ -1,15 +1,18 @@
-'use client';
-import { Card } from './ui/Card';
-import { useEffect } from 'react';
+"use client";
+// Displays simple insights placeholder
+import { useEffect, memo } from "react";
+import { Card } from "./ui/Card";
 
-export default function Insights() {
+function Insights() {
   useEffect(() => {
-    console.log('[Insights] Top 5 displayed');
-    console.log('[Insights] Cleanup suggested');
+    console.log("[Insights] mounted");
   }, []);
+
   return (
     <section className="space-y-4" aria-labelledby="insights-title">
-      <h2 id="insights-title" className="text-xl font-semibold">오래된 보관품 Top5</h2>
+      <h2 id="insights-title" className="text-xl font-semibold">
+        오래된 보관품 Top5
+      </h2>
       <Card className="p-4">차트 자리</Card>
       <h3 className="text-lg font-medium">1년 넘게 안쓴 물건들</h3>
       <Card className="p-4 flex justify-between">
@@ -17,7 +20,7 @@ export default function Insights() {
         <button
           role="button"
           className="underline"
-          onClick={() => console.log('정리 제안 클릭')}
+          onClick={() => console.log("[Insights] cleanup suggested")}
         >
           정리 제안
         </button>
@@ -25,3 +28,5 @@ export default function Insights() {
     </section>
   );
 }
+
+export default memo(Insights);

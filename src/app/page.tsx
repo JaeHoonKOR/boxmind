@@ -1,9 +1,14 @@
-import BoxList from '@/components/BoxList';
-import Insights from '@/components/Insights';
-import AddBox from '@/components/AddBox';
-import Head from 'next/head';
+import { useEffect } from "react";
+import BoxList from "@/components/BoxList";
+import Insights from "@/components/Insights";
+import AddBox from "@/components/AddBox";
+import Head from "next/head";
 
 export default function Home() {
+  useEffect(() => {
+    console.log("[Home] page loaded");
+  }, []);
+
   return (
     <>
       <Head>

@@ -1,5 +1,6 @@
-'use client';
-import { HTMLInputTypeAttribute } from 'react';
+"use client";
+// Input field wrapper used in forms
+import { HTMLInputTypeAttribute, memo } from "react";
 
 interface Props {
   label: string;
@@ -9,7 +10,7 @@ interface Props {
   required?: boolean;
 }
 
-export default function InputField({ label, type = 'text', register, name, required }: Props) {
+function InputField({ label, type = "text", register, name, required }: Props) {
   return (
     <label className="block space-y-1">
       <span className="text-sm font-medium">{label}</span>
@@ -22,3 +23,5 @@ export default function InputField({ label, type = 'text', register, name, requi
     </label>
   );
 }
+
+export default memo(InputField);
