@@ -121,4 +121,4 @@ npm install
 npm run dev
 ```
 
-The app uses the Next.js App Router with basic pages for Home, Box Detail, and Reminders.
+The app uses the Next.js App Router with pages for the landing screen, dashboard, box detail, and reminders.
