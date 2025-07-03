@@ -28,3 +28,13 @@ export async function fetchReminders(userId: string) {
   console.log("[API] fetchReminders", { userId });
   return [] as { type: "expiry" | "reorg"; message: string; color: string }[];
 }
+
+export async function signUp(email: string) {
+  console.log("[API] signUp", { email });
+  return { userId: "temp" };
+}
+
+export async function login(email: string) {
+  console.log("[API] login", { email });
+  return { token: "temp" };
+}

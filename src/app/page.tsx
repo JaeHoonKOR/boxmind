@@ -1,18 +1,39 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Head from 'next/head';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Landing() {
   const router = useRouter();
+  const heroRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const loggedIn = typeof window !== 'undefined' && localStorage.getItem('loggedIn') === 'true';
     if (loggedIn) {
       router.replace('/dashboard');
     }
   }, [router]);
+
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    gsap.fromTo(
+      el.querySelectorAll('.reveal'),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.2,
+        scrollTrigger: { trigger: el, start: 'top center' },
+      },
+    );
+  }, []);
 
   const start = () => {
     if (typeof window !== 'undefined') {
@@ -27,11 +48,11 @@ export default function Landing() {
         <title>BoxMind</title>
       </Head>
       <main className="p-8 space-y-16 text-center">
-        <section className="space-y-6">
-          <h1 className="text-3xl font-bold">BoxMind – Your Digital Declutter Assistant</h1>
-          <p className="text-lg">박스 기반 정리, 알림, AI 분류로 깔끔한 생활을 누리세요.</p>
+        <section className="space-y-6" ref={heroRef}>
+          <h1 className="text-3xl font-bold reveal">BoxMind – Your Digital Declutter Assistant</h1>
+          <p className="text-lg reveal">박스 기반 정리, 알림, AI 분류로 깔끔한 생활을 누리세요.</p>
           <div className="flex justify-center">
-            <Card className="w-60 h-40 flex items-center justify-center">스크린샷</Card>
+            <Card className="w-60 h-40 flex items-center justify-center reveal">스크린샷</Card>
           </div>
           <Button onClick={start} className="mx-auto">Get Started</Button>
         </section>
